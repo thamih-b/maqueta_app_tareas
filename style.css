@@ -1,5 +1,6 @@
 :root {
   /* Light mode (padrão) */
+  /* Light mode (padrão) */
   --primary-color: #3498db;
   --secondary-color: #2ecc71;
   --bg-color: #4a410924;
@@ -22,6 +23,7 @@
 
 
   /* Fontes e espaçamentos (mantidos) */
+  /* Fontes e espaçamentos (mantidos) */
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-size-base: 16px;
   --font-size-sm: 14px;
@@ -31,6 +33,19 @@
   --spacing-md: 1.5rem;
   --spacing-lg: 2rem;
   --spacing-xl: 3rem;
+}
+
+/* Dark mode automático */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1a1a1a;
+    --card-bg: #2d2d2d;
+    --text-color: #e0e0e0;
+    --border-color: #444;
+    --high-priority: #ff6b6b;
+    --medium-priority: #ffd93d;
+    --low-priority: #6c757d;
+  }
 }
 
 /* Dark mode automático */
@@ -58,6 +73,8 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   line-height: 1.6;
+  display: flex;
+  min-height: 100vh;
   display: flex;
   min-height: 100vh;
 }
@@ -179,6 +196,101 @@ aside h2 {
 
 section h2 {
   margin-bottom: var(--spacing-md);
+}
+
+/* Checkbox customizado */
+.task-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.task-check-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.task-check-label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+  width: 24px;
+  height: 24px;
+  background: var(--border-color);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.task-check-label::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 10px;
+  border: solid var(--card-bg);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.task-check-input:checked + .task-check-label {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.task-check-input:checked + .task-check-label::after {
+  display: block;
+}
+
+/* Seletor de prioridade */
+.priority-select {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
+  cursor: pointer;
+  min-width: 80px;
+}
+
+.priority-select option[value="high"] { color: var(--high-priority); }
+.priority-select option[value="medium"] { color: var(--medium-priority); }
+.priority-select option[value="low"] { color: var(--low-priority); }
+
+/* Classes de prioridade dinâmica */
+article.priority-high { border-left-color: var(--high-priority); }
+article.priority-high .priority-badge { background: var(--high-priority); }
+
+article.priority-medium { border-left-color: var(--medium-priority); }
+article.priority-medium .priority-badge { background: var(--medium-priority); }
+
+article.priority-low { border-left-color: var(--low-priority); }
+article.priority-low .priority-badge { background: var(--low-priority); }
+
+/* Badge prioridade (span anterior renomeado) */
+.priority-badge {
+  align-self: flex-start;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+}
+
+/* Task header atualizado */
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  width: 100%;
 }
 
 /* Checkbox customizado */
@@ -447,6 +559,7 @@ article span {
 
 
 /* Estados das tarefas */
+/* Estados das tarefas - APENAS riscar o título h3 */
 article.completed {
   opacity: 0.6;
   background: #ecf0f1;
